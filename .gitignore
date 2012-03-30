@@ -1,3 +1,4 @@
 .rvmrc
 spec/fixtures/test.db
+Gemfile.lock
 TAGS
