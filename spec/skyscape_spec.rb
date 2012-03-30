@@ -3,9 +3,13 @@ require 'skyscape'
 
 describe Skyscape do
   before do
-    File.delete fixture_db
+    File.delete(fixture_db) if File.exists?(fixture_db)
     create_test_db
     @skyscape = Skyscape.new fixture_db
+  end
+
+  after do
+    File.delete(fixture_db) if File.exists?(fixture_db)
   end
 
   it "Skyscape.new fileでファイルが開かれること" do

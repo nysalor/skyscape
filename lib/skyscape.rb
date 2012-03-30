@@ -47,10 +47,6 @@ class Skyscape
   end
 
   def search_sql_base
-    'select * from Messages where ' 
-  end
-
-    def search_by_word_and_name_sql
-    'select * from Messages where body_xml like ? and from_dispname like ?'
+    'select timestamp, from_dispname, body_xml, chatname from Messages where '
   end
 end
