@@ -6,6 +6,15 @@ require './lib/skyscape'
 require 'optparse'
 require 'sanitize'
 
+def dt2utc(dt)
+  count = 6 - dt.split('-').size
+  if count > 0
+    dt += '-'
+    dt += Array.new(count, '00').join('-')
+  end
+  Time.strptime(dt, '%Y-%m-%d-%H-%M-%S').to_i
+end
+
 opt = OptionParser.new
 
 OptionParser.new{|opt|
@@ -13,20 +22,22 @@ OptionParser.new{|opt|
   opt.on('-n', '--name=USER_NAME', String, 'specify user name.') {|var| @name = var }
   opt.on('-s', '--start-datetime=YYYY-MM-DD(-hh-mm-dd)', String, 'specify start date and time.') {|var| @start_dt = var }
   opt.on('-e', '--end-datetime=YYYY-MM-DD(-hh-mm-dd)', String, 'specify end date and time.') {|var| @end_dt = var }
-  opt.on('-s', '--simple-format', String, 'output simple text.') {|var| @simple = true }
+  opt.on('-t', '--text-format', String, 'output simple text.') {|var| @simple = true }
 }.parse!(ARGV)
 
 @search_word = ARGV.shift
 
-@skyscape = Skyscape.new (@db_filename || 'main.db')
+@skyscape = Skyscape.new (@db_filename || './main.db')
 
 if @search_word
   opts = {
     :word => @search_word,
     :name => @name,
-    :start => @start_dt,
-    :end => @end_dt
   }
+  
+  opts[:start] = dt2utc(@start_dt) if @start_dt
+  opts[:end] = dt2utc(@end_dt) if @end_dt
+  puts opts.inspect
 
   @results = @skyscape.search opts
 
