@@ -1,6 +1,6 @@
 skyscape
 ======================
-search your local Skype log.
+search your local Skype chat log.
 
 requirement
 ------
@@ -10,7 +10,7 @@ usage
 ------
 bundle install
 
-bin/skyscape -s -f ~/Library/Application\ Support/Skype/user_name/main.db target_word
+bin/skyscape -t -f ~/Library/Application\ Support/Skype/user_name/main.db target_word
 
 option
 ------
@@ -28,6 +28,12 @@ option
 example
 ------
 bin/skyscape -s 2012-03-25-12-00-00 -t -f ~/Library/Application\ Support/Skype/jun/main.db Matz
+
+todo
+------
+get chatroom's name.
+
+web interface or export by html format.
 
 License
 ----------
